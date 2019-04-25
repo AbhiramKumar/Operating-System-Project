@@ -47,6 +47,20 @@ bool all_processes_completed()
     return TRUE;
 }
 
+int get_queue_with_highest_priority_containing_process()
+{
+    for (int priority = 0; priority <= queue_count; priority++)
+    {
+        for (int index = 0; index < processes_count; index++)
+        {
+            if (process[index].queue == priority && (process[index].burst > 0) && total_time >= process[index].arrival)
+            {
+                return process[index].queue;
+            }
+        }
+    }
+}
+
 int main()
 {
     printf("Enter Processes Count : ");
