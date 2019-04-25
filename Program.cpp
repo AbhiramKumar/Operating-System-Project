@@ -61,6 +61,32 @@ int get_queue_with_highest_priority_containing_process()
     }
 }
 
+void execute_processes()
+{
+    while (!all_processes_completed())
+    {
+        if (!all_arrived_processes_completed())
+        {
+            short int queue_id;
+            for (short int process_id = 0; process_id < processes_count; process_id++)
+            {
+                queue_id = get_queue_with_highest_priority_containing_process();
+                if ((process[process_id].burst > 0) && (total_time >= process[process_id].arrival) && (process[process_id].queue == queue_id))
+                {
+                    for (short int time_q = 0; time_q < time_quantum; time_q++)
+                    {
+                        //execution
+                    }
+                }
+            }
+        }
+        else
+        {
+            ++total_time;
+        }
+    }
+}
+
 int main()
 {
     printf("Enter Processes Count : ");
