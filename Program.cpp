@@ -23,6 +23,30 @@ int get_max_queue()
     return max;
 }
 
+bool all_arrived_processes_completed()
+{
+    for (short int index = 0; index < processes_count; index++)
+    {
+        if (process[index].burst > 0 && total_time >= process[index].arrival)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+bool all_processes_completed()
+{
+    for (short int index = 0; index < processes_count; index++)
+    {
+        if (process[index].burst > 0)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 int main()
 {
     printf("Enter Processes Count : ");
