@@ -116,6 +116,36 @@ void execute_processes()
     }
 }
 
+void display_data()
+{
+    system("cls");
+    printf("\n\nProcess     :  Arival\t Burst\t Queue\t Compt\t Turn\t Waiting\t\n");
+    printf("__________________________________________________________________\n");
+    for (short int index = 0; index < processes_count; index++)
+    {
+        printf("Process %d   :  %d\t %d\t %d\t %d\t %d\t %d\n\n", index, process[index].arrival, process[index].burst_backup, process[index].queue, process[index].completion, process[index].turn_around, process[index].waiting);
+    }
+
+    printf("\n__________________________________________________________________\n");
+
+    float total_turnaround_time = 0, total_waiting_time = 0;
+
+    for (short int index = 0; index < processes_count; index++)
+    {
+        total_turnaround_time += process[index].turn_around;
+    }
+    total_turnaround_time /= processes_count;
+
+    for (short int index = 0; index < processes_count; index++)
+    {
+        total_waiting_time += process[index].waiting;
+    }
+    total_waiting_time /= processes_count;
+
+    printf("\nAverage Turn around Time : %.2f\n", total_turnaround_time);
+    printf("\nAverage Waiting Time : %.2f\n\n\n", total_waiting_time);
+}
+
 int main()
 {
     printf("Enter Processes Count : ");
@@ -132,5 +162,10 @@ int main()
 
     system("cls");
     queue_count = get_max_queue();
+    printf("Execution Started : \n");
+    execute_processes();
+    printf("\n\nAll Processes executed\n\n");
+    system("pause");
+    display_data();
     system("pause");
 }
