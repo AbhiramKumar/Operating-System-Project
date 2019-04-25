@@ -61,6 +61,17 @@ int get_queue_with_highest_priority_containing_process()
     }
 }
 
+void update_waiting_time(short int process_id)
+{
+    for (short int index = 0; index < processes_count; index++)
+    {
+        if ((index != process_id) && (total_time > process[index].arrival) && (process[index].burst > 0))
+        {
+            ++process[index].waiting;
+        }
+    }
+}
+
 void execute_processes()
 {
     while (!all_processes_completed())
@@ -75,7 +86,25 @@ void execute_processes()
                 {
                     for (short int time_q = 0; time_q < time_quantum; time_q++)
                     {
-                        //execution
+                        --process[process_id].burst;
+                        ++total_time;
+                        printf("\nProcess %d executing...", process_id);
+                        Sleep(1000);
+
+                        update_waiting_time(process_id);
+
+                        if (process[process_id].burst == 0)
+                        {
+                            process[process_id].completion = total_time;
+                            process[process_id].turn_around = process[process_id].completion - process[process_id].arrival;
+                            printf("\nProcess %d executed", process_id);
+                            break;
+                        }
+
+                        if (get_queue_with_highest_priority_containing_process() < process[process_id].queue)
+                        {
+                            break;
+                        }
                     }
                 }
             }
